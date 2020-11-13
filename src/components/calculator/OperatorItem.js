@@ -10,6 +10,7 @@ const WIDTH = Dimensions.get('window').width;
 const OperatorItem = ({ onAction, value }) => {
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={() => {
         onAction(value);
       }}>

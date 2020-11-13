@@ -13,6 +13,7 @@ const WIDTH = Dimensions.get('window').width;
 const NumbItem = ({ onClick, onClickSymbol, value }) => {
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={() => {
         if (regexNumberOnly.test(value)) {
           onClick(value);
