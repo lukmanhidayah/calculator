@@ -6,10 +6,20 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { regexNumberOnly } from '../../utils/regex';
+
 const WIDTH = Dimensions.get('window').width;
-const NumbItem = ({ onPress, value }) => {
+
+const NumbItem = ({ onClick, onClickSymbol, value }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        if (regexNumberOnly.test(value)) {
+          onClick(value);
+        } else {
+          onClickSymbol(value);
+        }
+      }}>
       <View style={[styles.numbContent]}>
         <Text style={[styles.textNumber]}>{value}</Text>
       </View>

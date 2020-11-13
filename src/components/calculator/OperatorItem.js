@@ -7,9 +7,12 @@ import {
   Dimensions,
 } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
-const OperatorItem = ({ onPress, value }) => {
+const OperatorItem = ({ onAction, value }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        onAction(value);
+      }}>
       <View style={[styles.operatorContent]}>
         <Text style={[styles.textNumber]}>{value}</Text>
       </View>

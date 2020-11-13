@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-const Result = () => {
+import { StyleSheet, Text, ScrollView } from 'react-native';
+const Result = ({ value = 0 }) => {
   return (
-    <View style={styles.content}>
-      <Text style={styles.textResult}>0</Text>
-    </View>
+    <ScrollView style={styles.content}>
+      <Text style={styles.textResult}>{value}</Text>
+    </ScrollView>
   );
 };
 
@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: '#121212',
-    padding: 10,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    transform: [{ scaleY: -1 }],
   },
   textResult: {
     fontSize: 50,
     fontWeight: 'bold',
     color: 'white',
+    transform: [{ scaleY: -1 }],
+    textAlign: 'right',
   },
 });

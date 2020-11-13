@@ -6,17 +6,24 @@ import OperatorItem from '../calculator/OperatorItem';
 const numb = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, '.', '='];
 const operator = ['⌫', '+', '-', '/', '*'];
 
-const Content = () => {
+const Content = ({ onClick, onAction }) => {
   return (
     <View style={styles.content}>
       <View style={styles.numbContainer}>
         {numb.map((res) => {
-          return <NumbItem key={res} value={res} />;
+          return (
+            <NumbItem
+              key={res}
+              value={res}
+              onClick={onClick}
+              onClickSymbol={onAction}
+            />
+          );
         })}
       </View>
       <View style={styles.operatorContainer}>
         {operator.map((res) => {
-          return <OperatorItem key={res} value={res} />;
+          return <OperatorItem key={res} value={res} onAction={onAction} />;
         })}
       </View>
     </View>
