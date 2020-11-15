@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   textResult: {
     fontSize: 50,
+    padding: 10,
     fontWeight: 'bold',
     color: 'white',
     transform: [{ scaleY: -1 }],
