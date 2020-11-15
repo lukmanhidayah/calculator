@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Content from '../../components/commons/Content';
 import Result from '../../components/commons/Result';
-import { regexNumberOnly } from '../../utils/regex';
+import { regexCheckSymbol, regexNumberOnly } from '../../utils/regex';
+import { evaluate } from 'mathjs';
 
 const Calculator = () => {
   const [result, setResult] = useState('');
@@ -22,6 +23,20 @@ const Calculator = () => {
     [result],
   );
 
+  const insertInput = useCallback(
+    (value) => {
+      const checkValue = result.split(regexCheckSymbol);
+
+      if (checkValue.length > 1) {
+        const tampResult = evaluate(result);
+        setResult(tampResult.toString() + value);
+      } else {
+        setResult((prevState) => prevState + value);
+      }
+    },
+    [result],
+  );
+
   const onAction = useCallback(
     (action) => {
       switch (action) {
@@ -35,27 +50,26 @@ const Calculator = () => {
           break;
         case '+':
           if (operatorChecking(action)) {
-            setResult((prevState) => prevState + action);
+            insertInput(action);
           }
           break;
         case '/':
           if (operatorChecking(action)) {
-            setResult((prevState) => prevState + action);
+            insertInput(action);
           }
           break;
         case '-':
           if (operatorChecking(action)) {
-            setResult((prevState) => prevState + action);
+            insertInput(action);
           }
           break;
         case '*':
           if (operatorChecking(action)) {
-            setResult((prevState) => prevState + action);
+            insertInput(action);
           }
           break;
         case '.':
           if (operatorChecking(action)) {
-            setResult((prevState) => prevState + action);
           }
           break;
         case '=':
@@ -66,7 +80,7 @@ const Calculator = () => {
           return;
       }
     },
-    [operatorChecking],
+    [operatorChecking, insertInput],
   );
 
   return (
