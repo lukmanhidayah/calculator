@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Content from '../../components/commons/Content';
 import Result from '../../components/commons/Result';
-import { regexCheckSymbol, regexNumberOnly } from '../../utils/regex';
+import { regexCheckSymbol, regexNumberOnly, regexDot } from '../../utils/regex';
 import { evaluate } from 'mathjs';
 
 const Calculator = () => {
@@ -43,6 +43,26 @@ const Calculator = () => {
     [result],
   );
 
+  const checkDot = useCallback((value, stringValue) => {
+    if (stringValue.split(regexDot).length === 1) {
+      setResult((prevState) => prevState + value);
+    }
+  }, []);
+
+  const dotOperation = useCallback(
+    (value) => {
+      const checkValue = result.split(regexCheckSymbol);
+
+      if (checkValue.length > 1) {
+        const secondValue = checkValue[1];
+        checkDot(value, secondValue);
+      } else {
+        checkDot(value, result);
+      }
+    },
+    [result, checkDot],
+  );
+
   const onAction = useCallback(
     (action) => {
       switch (action) {
@@ -75,8 +95,7 @@ const Calculator = () => {
           }
           break;
         case '.':
-          if (operatorChecking(action)) {
-          }
+          dotOperation(action);
           break;
         case '=':
           if (operatorChecking(action)) {
@@ -87,7 +106,7 @@ const Calculator = () => {
           return;
       }
     },
-    [operatorChecking, insertInput],
+    [operatorChecking, insertInput, dotOperation],
   );
 
   return (
