@@ -26,12 +26,18 @@ const Calculator = () => {
   const insertInput = useCallback(
     (value) => {
       const checkValue = result.split(regexCheckSymbol);
-
-      if (checkValue.length > 1) {
-        const tampResult = evaluate(result);
-        setResult(tampResult.toString() + value);
+      if (value !== '=') {
+        if (checkValue.length > 1) {
+          const tampResult = evaluate(result);
+          setResult(tampResult.toString() + value);
+        } else {
+          setResult((prevState) => prevState + value);
+        }
       } else {
-        setResult((prevState) => prevState + value);
+        if (checkValue.length > 1) {
+          const tampResult = evaluate(result);
+          setResult(tampResult.toString());
+        }
       }
     },
     [result],
@@ -74,6 +80,7 @@ const Calculator = () => {
           break;
         case '=':
           if (operatorChecking(action)) {
+            insertInput(action);
           }
           break;
         default:
